@@ -1,5 +1,7 @@
 epidemiological_week,date,order_for_place,state,city,city_ibge_code,place_type,last_available_confirmed,last_available_confirmed_per_100k_inhabitants,new_confirmed,last_available_deaths,new_deaths,last_available_death_rate,estimated_population,is_last,is_repeated
-49,2020-11-29,252,PE,Petrolina,2611101,city,8303,2343.38177,188,114,0,0.0137,354317,True,False
+49,2020-12-01,254,PE,Petrolina,2611101,city,8409,2373.29849,0,114,0,0.0136,354317,False,True
+49,2020-11-30,253,PE,Petrolina,2611101,city,8409,2373.29849,106,114,0,0.0136,354317,True,False
+49,2020-11-29,252,PE,Petrolina,2611101,city,8303,2343.38177,188,114,0,0.0137,354317,False,False
 48,2020-11-28,251,PE,Petrolina,2611101,city,8115,2290.32194,189,114,0,0.014,354317,False,False
 48,2020-11-27,250,PE,Petrolina,2611101,city,7926,2236.97988,33,114,0,0.0144,354317,False,False
 48,2020-11-26,249,PE,Petrolina,2611101,city,7893,2227.66619,9,114,0,0.0144,354317,False,False
