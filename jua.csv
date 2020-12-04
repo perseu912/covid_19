@@ -1,5 +1,7 @@
 epidemiological_week,date,order_for_place,state,city,city_ibge_code,place_type,last_available_confirmed,last_available_confirmed_per_100k_inhabitants,new_confirmed,last_available_deaths,new_deaths,last_available_death_rate,estimated_population,is_last,is_repeated
-49,2020-12-01,254,BA,Juazeiro,2918407,city,7062,3237.04403,21,126,0,0.0178,218162,True,False
+49,2020-12-03,256,BA,Juazeiro,2918407,city,7093,3251.25366,0,126,0,0.0178,218162,False,True
+49,2020-12-02,255,BA,Juazeiro,2918407,city,7093,3251.25366,31,126,0,0.0178,218162,True,False
+49,2020-12-01,254,BA,Juazeiro,2918407,city,7062,3237.04403,21,126,0,0.0178,218162,False,False
 49,2020-11-30,253,BA,Juazeiro,2918407,city,7041,3227.41816,12,126,0,0.0179,218162,False,False
 49,2020-11-29,252,BA,Juazeiro,2918407,city,7029,3221.91766,72,126,0,0.0179,218162,False,False
 48,2020-11-28,251,BA,Juazeiro,2918407,city,6957,3188.91466,52,126,0,0.0181,218162,False,False
