@@ -4,15 +4,19 @@ import numpy as np
 import pandas as pd
 from collections import namedtuple as nt
 
+dd = {}
+
 def data_from_path(city,path):
     print('lendo o arquivo...')
     data = pd.read_csv(path,sep=',')
     print('arquivo lido!')
+    data.to_excel(f'data_{city}.xlsx')
     print('organizando informações...')
     confirmados = data['last_available_confirmed'][::-1]
     mortos = data['last_available_deaths'][::-1]
     casos_diarios = data['new_confirmed'][::-1]
     mortes_diarias = data['new_deaths'][::-1]
+    population = data['estimated_population'][::-1]
 
     meses = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez']
     date = data['date'][::-1]
@@ -27,6 +31,7 @@ def data_from_path(city,path):
          'mortos':np.array(mortos),
          'mortes_diarias':abs(np.array(mortes_diarias)),
          'casos_diarios':abs(np.array(casos_diarios)),
+         'population':np.array(population),
          'date':date}
     dados = pd.DataFrame(dados,index=date)
     print('DataFrame construido com sucesso!')
@@ -173,7 +178,7 @@ def get_io_data(city,state,name,password):
 
         
 
-def play_dados(city,state,login):
+def play_data_full(city,state,login):
     path = get_io_data(city,state,login[0],login[1])
     if(path):
         dados = data_from_path(city,path)
@@ -181,4 +186,147 @@ def play_dados(city,state,login):
     else:
         print('path não encontrado')
         
+
         
+def data_from_city(city,state,login):
+   path = get_io_data(city,state,login[0],login[1])
+   if(path):
+      dados = data_from_path(city,path)
+      return dados
+   else:
+      print('path não encontrado')
+
+med_movel = calcSma
+
+
+
+####
+# plot periodo passado de casos
+####
+def plot_media_period_cases(dados,city,state,size=30):
+   dados = dados[-size:]
+   ax = dados.plot(x='date',y='casos_diarios',kind='bar',color='black')
+   print(f'encontrando a média móvel de casos confirmados em {city}-{state}...')
+   casos_diarios = dados['casos_diarios']
+   media = calcSma(casos_diarios,7)
+   media_casos = media
+   plt.plot(dados['date'],media,label='media móvel',c='red')
+   
+   print('configurando o plot...')
+   ticklabels = ['']*len(dados.index)
+   ticklabels[::3] = dados['date'][::3]
+   ax.xaxis.set_major_formatter(ticker.FixedFormatter(ticklabels))
+   plt.gcf().autofmt_xdate()
+   
+   print(f'casos de covid-19 em {city}')
+   plt.legend()
+   plt.xlabel('data')
+   plt.ylabel('numero de pessoas')
+   plt.title(f'casos diarios em covid-19 em {city}-{state} nos últimos {size} dias')
+   print('salvando plotagem de media movel de casos...')
+   plt.savefig(f'plot_media_period_cases_{size}_{city}.jpg',dpi=800)
+   print('plotagem salva!')
+   plt.show()
+   
+   plt_casos = plt
+   
+   return plt_casos
+
+
+
+####
+#plotagem de periodo de mortes
+####
+def plot_media_period_deaths(dados,city,state,size=30):
+    dados = dados[-size:]
+    ax = dados.plot(x='date',y='mortes_diarias',kind='bar',color='black')
+    
+    print(f'encontrando a média móvel de mortes em {city}-{state}...')
+    mortes_diarias = dados['mortes_diarias']
+    media = calcSma(mortes_diarias,7)
+    media_mortes = media
+    plt.plot(dados['date'],media,label='media móvel',c='red')
+    
+    print('configurando o ticklabels...')
+    ticklabels = ['']*len(dados.index)
+    ticklabels[::3] = dados['date'][::3]
+    ax.xaxis.set_major_formatter(ticker.FixedFormatter(ticklabels))
+    plt.gcf().autofmt_xdate()
+    
+    print(f'media movel de mortos da covid-19 em {city}-{state} nos últimos 30 dias')
+    plt.legend()
+    plt.xlabel('data')
+    plt.ylabel('numero de pessoas')
+    plt.title(f'mortes diarias em covid-19 em {city}-{state} nos últimos 30 dias')
+    print('salvando a plotagem de media movel de mortes...')
+    plt.savefig(f'plot_mortes_media_deaths_{size}_{city}.jpg',dpi=800)
+    print('plotagem salva!')
+    plt.show()
+    
+    plt_mortes = plt
+    
+    return plt_mortes
+#calcula a porcentagem do crescimento da lista em um
+#determinado periodo
+####
+def per_size(lis,size):
+   init = float(lis[-(size)])
+  # print(init)
+   end = float(lis[-1])
+  # print(end)
+   return float((end-init)/init) * 100
+   
+   
+   
+####
+#porcentagem do crescimento de casos confirmados
+####
+def percent_mortes(dados,size):
+   mortes_mov = med_movel(dados['mortes_diarias'],7)
+   per_mortes = per_size(mortes_mov,size)
+   per_mortes = round(per_mortes,2)
+   param_mortes = 'subiu' if(per_mortes>0) else 'caiu'
+   return per_mortes, param_mortes
+
+
+
+####
+#porcentagem do crescimento de mortes
+####
+def percent_casos(dados,size):
+   casos_mov = med_movel(dados['casos_diarios'],7)
+   per_casos = per_size(casos_mov,size)
+   per_casos = round(per_casos,2)
+   param_casos = 'subiu' if(per_casos>0) else 'caiu'
+   return per_casos, param_casos
+
+
+
+####
+#porcentagem basica do crescimento de mortos
+####
+def percent_mortes_basic(dados,size):
+   list_mortos = dados['mortos']
+   diff = (int(list_mortos[-1]) - int(list_mortos[-size]))
+   per_mortes_basic = diff/int(list_mortos[-size])
+   per_mortes_basic = round(per_mortes_basic*100,2)
+   return per_mortes_basic,diff
+
+
+
+####
+#porcentagem basicado do crescimento de casos
+####
+def percent_casos_basic(dados,size):
+   list_casos = dados['confirmados']
+   diff = (int(list_casos[-1]) - int(list_casos[-size]))
+   per_casos_basic = diff/int(list_casos[-size])
+   per_casos_basic = round(per_casos_basic*100,2)
+   return per_casos_basic,diff
+
+#path_city = dd['path_city']
+def puts(inpt):
+   path_city = dd['path_city']
+   print(inpt)
+   with open(path_city,'a') as file:
+      file.write(f'{inpt}\n')

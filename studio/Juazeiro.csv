@@ -1,6 +1,9 @@
 epidemiological_week,date,order_for_place,state,city,city_ibge_code,place_type,last_available_confirmed,last_available_confirmed_per_100k_inhabitants,new_confirmed,last_available_deaths,new_deaths,last_available_death_rate,estimated_population,is_last,is_repeated
-202111,2021-03-17,360,BA,Juazeiro,2918407,city,10715,4911.48779,0,187,0,0.0175,218162,False,True
-202111,2021-03-16,359,BA,Juazeiro,2918407,city,10715,4911.48779,47,187,1,0.0175,218162,True,False
+202111,2021-03-20,363,BA,Juazeiro,2918407,city,11011,5047.16678,0,197,0,0.0179,218162,False,True
+202111,2021-03-19,362,BA,Juazeiro,2918407,city,11011,5047.16678,177,197,7,0.0179,218162,True,False
+202111,2021-03-18,361,BA,Juazeiro,2918407,city,10834,4966.03441,0,190,0,0.0175,218162,False,True
+202111,2021-03-17,360,BA,Juazeiro,2918407,city,10834,4966.03441,119,190,3,0.0175,218162,False,False
+202111,2021-03-16,359,BA,Juazeiro,2918407,city,10715,4911.48779,47,187,1,0.0175,218162,False,False
 202111,2021-03-15,358,BA,Juazeiro,2918407,city,10668,4889.94417,236,186,2,0.0174,218162,False,False
 202111,2021-03-14,357,BA,Juazeiro,2918407,city,10432,4781.76768,0,184,0,0.0176,218162,False,True
 202110,2021-03-13,356,BA,Juazeiro,2918407,city,10432,4781.76768,0,184,0,0.0176,218162,False,True
